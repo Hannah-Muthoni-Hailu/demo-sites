@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quote Calculator | Aqua Hub Kenya LTD</title>
+<meta name="description" content="Estimate the cost of a greenhouse, drip irrigation kit, dam liner, shade net or solar dryer from Aqua Hub Kenya.">
+<style>
+/* ------------------------------------------------------------------
+   BRAND TOKENS - change these to match the live site exactly.
+   ------------------------------------------------------------------ */
+:root{
+  --brand:#5b9a1f;
+  --brand-dark:#477a16;
+  --brand-tint:#f1f7e8;
+  --ink:#242424;
+  --text:#4d4d4d;
+  --muted:#808080;
+  --line:#e1e1e1;
+  --panel:#f7f7f7;
+  --topbar:#1b1b1b;
+  --warn:#a85a00;
+  --font-body:Lato,"Helvetica Neue",Helvetica,Arial,sans-serif;
+  --font-head:Poppins,"Segoe UI","Helvetica Neue",Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;font:15px/1.65 var(--font-body);color:var(--text);background:#fff}
+a{color:inherit;text-decoration:none}
+h1,h2,h3,h4{font-family:var(--font-head);color:var(--ink);margin:0;line-height:1.25}
+.wrap{max-width:1222px;margin:0 auto;padding:0 15px}
+
+/* top bar */
+.topbar{background:var(--topbar);color:#cfcfcf;font-size:12px;letter-spacing:.4px;text-transform:uppercase}
+.topbar .wrap{display:flex;justify-content:space-between;align-items:center;min-height:38px;gap:12px;flex-wrap:wrap}
+.topbar b{color:#fff;font-weight:700}
+.topbar a:hover{color:#fff}
+
+/* header */
+.header{border-bottom:1px solid var(--line);background:#fff}
+.header .wrap{display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:84px;flex-wrap:wrap;padding-top:10px;padding-bottom:10px}
+.logo{display:flex;align-items:center;gap:10px;font-family:var(--font-head);font-weight:700;color:var(--ink);font-size:22px;letter-spacing:.5px;line-height:1}
+.logo svg{width:30px;height:38px;flex:none}
+.logo small{display:block;font-size:10px;letter-spacing:3.2px;color:var(--brand);margin-top:5px;font-weight:600}
+.nav{display:flex;flex-wrap:wrap;gap:4px 24px;align-items:center;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:var(--ink)}
+.nav a{padding:6px 0;border-bottom:2px solid transparent}
+.nav a:hover,.nav a.on{color:var(--brand);border-color:var(--brand)}
+.nav .cta{background:var(--brand);color:#fff;padding:11px 20px;border:0}
+.nav .cta:hover{background:var(--brand-dark);color:#fff}
+
+/* page title */
+.pagetitle{background:#2a2a2a;color:#fff;text-align:center;padding:38px 15px 34px}
+.pagetitle h1{color:#fff;font-size:30px;text-transform:uppercase;letter-spacing:1px;font-weight:700}
+.crumbs{margin-top:10px;font-size:12px;text-transform:uppercase;letter-spacing:.6px;color:#b5b5b5}
+.crumbs a:hover{color:#fff}
+.crumbs span{margin:0 6px}
+
+/* intro + tabs */
+.intro{max-width:760px;margin:34px auto 22px;text-align:center}
+.intro h2{font-size:22px;margin-bottom:8px}
+.intro p{margin:0;color:var(--muted)}
+.tabs{display:flex;flex-wrap:wrap;justify-content:center;gap:0 6px;border-bottom:1px solid var(--line);margin:0 0 30px}
+.tab{appearance:none;background:none;border:0;border-bottom:3px solid transparent;margin-bottom:-1px;padding:14px 20px;cursor:pointer;font:700 13px var(--font-head);text-transform:uppercase;letter-spacing:.6px;color:var(--muted)}
+.tab:hover{color:var(--ink)}
+.tab[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--brand)}
+.tab:focus-visible,.btn:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
+
+/* layout */
+.grid{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:30px;align-items:start;margin-bottom:60px}
+@media(max-width:900px){.grid{grid-template-columns:1fr}}
+
+/* form */
+.formcard{border:1px solid var(--line);padding:26px 28px 8px}
+.formcard>h3{font-size:16px;text-transform:uppercase;letter-spacing:.7px;padding-bottom:14px;margin-bottom:20px;border-bottom:1px solid var(--line)}
+.field{margin-bottom:24px}
+.field[hidden]{display:none}
+.field>label,.field>.lab{display:block;font:700 12px var(--font-head);text-transform:uppercase;letter-spacing:.7px;color:var(--ink);margin-bottom:9px}
+.help{font-size:13px;color:var(--muted);margin-top:7px}
+select,input[type=number]{width:100%;height:46px;border:1px solid var(--line);background:#fff;padding:0 14px;font:15px var(--font-body);color:var(--ink);border-radius:0}
+select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,#777 50%),linear-gradient(135deg,#777 50%,transparent 50%);background-position:calc(100% - 20px) 20px,calc(100% - 15px) 20px;background-size:5px 5px;background-repeat:no-repeat;padding-right:36px}
+select:hover,input[type=number]:hover{border-color:#bdbdbd}
+.row{display:grid;grid-template-columns:1fr 140px;gap:10px}
+.row3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.row3 .sub{font-size:12px;color:var(--muted);margin-bottom:4px}
+.choices{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px}
+.choice{position:relative;display:block;border:1px solid var(--line);padding:12px 14px 12px 40px;cursor:pointer;background:#fff;min-height:58px}
+.choice input{position:absolute;left:14px;top:15px;accent-color:var(--brand);width:16px;height:16px;margin:0}
+.choice b{display:block;color:var(--ink);font-size:14px;line-height:1.3}
+.choice span{display:block;font-size:12.5px;color:var(--muted);line-height:1.4;margin-top:2px}
+.choice:hover{border-color:#bdbdbd}
+.choice:has(input:checked){border-color:var(--brand);background:var(--brand-tint)}
+.field>label.check{font:15px var(--font-body);text-transform:none;letter-spacing:0;color:var(--text);margin:0}
+.check{display:flex;gap:12px;align-items:flex-start;border:1px solid var(--line);padding:12px 14px;cursor:pointer}
+.check input{accent-color:var(--brand);width:17px;height:17px;margin:3px 0 0;flex:none}
+.check b{display:block;color:var(--ink);font-size:14px}
+.check span{display:block;font-size:12.5px;color:var(--muted)}
+.check:has(input:checked){border-color:var(--brand);background:var(--brand-tint)}
+.note{border-left:3px solid var(--brand);background:var(--panel);padding:11px 14px;font-size:13.5px}
+
+/* result */
+.result{position:sticky;top:16px;border:1px solid var(--line);border-top:3px solid var(--brand);background:var(--panel)}
+@media(max-width:900px){.result{position:static}}
+.result .in{padding:26px 26px 22px}
+.eyebrow{font:700 11px var(--font-head);text-transform:uppercase;letter-spacing:1.2px;color:var(--brand-dark);margin-bottom:8px}
+.result h2{font-size:20px;margin-bottom:6px}
+.sub{color:var(--muted);font-size:13.5px;margin:0}
+.price{margin:18px 0 4px;padding:16px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.price small{display:block;font:700 11px var(--font-head);text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:4px}
+.price strong{display:block;font:700 27px/1.2 var(--font-head);color:var(--ink)}
+.price em{font-style:normal;display:block;font-size:12.5px;color:var(--muted);margin-top:4px}
+table.lines{width:100%;border-collapse:collapse;margin:14px 0 6px;font-size:13.5px}
+table.lines td{padding:9px 0;border-bottom:1px dashed #d7d7d7;vertical-align:top}
+table.lines td:last-child{text-align:right;white-space:nowrap;padding-left:14px;color:var(--ink);font-weight:700}
+table.lines .t{color:var(--ink)}
+table.lines .n{display:block;font-size:12px;color:var(--muted);font-weight:400}
+table.lines .tag{font-weight:700;color:var(--brand-dark);font-size:12px;text-transform:uppercase;letter-spacing:.4px}
+.dag{color:var(--warn);font-weight:700}
+.block{margin-top:18px}
+.block h4{font:700 12px var(--font-head);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px}
+.block ul{margin:0;padding-left:18px;font-size:13.5px}
+.block li{margin-bottom:4px}
+.alt{margin-top:18px;border:1px solid var(--line);background:#fff;padding:12px 14px;font-size:13.5px}
+.alt b{color:var(--ink)}
+.warn{margin-top:14px;border-left:3px solid var(--warn);background:#fff6ea;padding:10px 14px;font-size:13.5px;color:#6b3d00}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.btn{display:inline-block;text-align:center;font:700 12.5px var(--font-head);text-transform:uppercase;letter-spacing:.7px;padding:14px 20px;border:1px solid var(--brand);background:var(--brand);color:#fff;cursor:pointer;flex:1 1 auto}
+.btn:hover{background:var(--brand-dark);border-color:var(--brand-dark)}
+.btn.ghost{background:#fff;color:var(--ink);border-color:#cfcfcf}
+.btn.ghost:hover{border-color:var(--ink);background:#fff}
+.fine{margin:16px 0 0;font-size:12px;color:var(--muted);line-height:1.55}
+.empty{padding:34px 26px;color:var(--muted);text-align:center}
+
+/* footer */
+.footer{background:var(--topbar);color:#a9a9a9;font-size:14px;padding:48px 0 0}
+.footer .cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:30px;padding-bottom:36px}
+.footer h4{color:#fff;font-size:14px;text-transform:uppercase;letter-spacing:.8px;margin-bottom:14px}
+.footer p{margin:0 0 10px}
+.footer a:hover{color:#fff}
+.footer li{list-style:none;margin-bottom:7px}
+.footer ul{margin:0;padding:0}
+.copy{border-top:1px solid #333;padding:16px 0;font-size:12.5px;text-align:center}
+.callfab{position:fixed;right:16px;bottom:16px;background:var(--brand);color:#fff;font:700 12px var(--font-head);text-transform:uppercase;letter-spacing:.6px;padding:13px 18px;z-index:5;box-shadow:0 2px 8px rgba(0,0,0,.25)}
+@media(min-width:901px){.callfab{display:none}}
+@media print{.topbar,.header,.tabs,.formcard,.footer,.callfab,.actions{display:none}.grid{display:block}.result{position:static;border:0}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+</header>
+
+<section class="pagetitle">
+  <h1>Quote Calculator</h1>
+</section>
+
+<main class="wrap">
+    <p>Choose a product, answer a few questions about your farm, and get a recommended package with an estimated price range in Kenya shillings.</p>
+  </div>
+
+  <div class="tabs" role="tablist" aria-label="Product"></div>
+
+  <div class="grid">
+    <section class="formcard" aria-labelledby="formTitle">
+      <h3 id="formTitle">Tell us about your project</h3>
+      <form id="form" onsubmit="return false" novalidate></form>
+    </section>
+    <aside class="result" id="result" aria-live="polite"></aside>
+  </div>
+</main>
+
+<script>
+/* ==================================================================
+      <a href="https://www.aquahubkenya.co.ke/products/" class="on">Our Products</a>
+      <a href="https://www.aquahubkenya.co.ke/blog-news-aqua-hub-kenya/">Farming Insights</a>
+      <a href="https://www.aquahubkenya.co.ke/about-aqua-hub-kenya/">About Us</a>
+      <a href="https://www.aquahubkenya.co.ke/">Home</a>
+    <div>Call: <a href="tel:+254790719020"><b>+254 790 719 020</b></a></div>
+    </a>
+      <span>AQUA HUB<small>KENYA LTD</small></span>
+  </div>
+   PRICE DATA AND CALCULATION LOGIC
+</div>
+
+      <svg viewBox="0 0 30 38" aria-hidden="true"><path d="M15 1C15 1 2 16 2 25a13 13 0 0 0 26 0C28 16 15 1 15 1z" fill="#5b9a1f"/><path d="M15 14v18M15 22c-4 0-6-2-6-5M15 26c4 0 6-2 6-5" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+  <div class="wrap">
+    <a class="logo" href="https://www.aquahubkenya.co.ke/" aria-label="Aqua Hub Kenya home">
+
+   All prices are in Kenya shillings (KES) and come from Aqua Hub's
+
+   published price pages (checked October 2026). Items marked est:true
+
+   are interpolated or derived and shown with a dagger in the result.
+   Edit the numbers below to update the calculator.
+
+   ================================================================== */
+/*CALC-START*/
+var ACRE = 4046.86;
+function band(p, pct){ return [p, Math.round(p * (1 + (pct || 0.05)) / 1000) * 1000]; }
+
+function r500(n){ return Math.round(n / 500) * 500; }
+function kes(n){ return 'KES ' + r500(n).toLocaleString('en-US'); }
+function range(lo, hi){ lo = r500(lo); hi = r500(hi); return lo === hi ? kes(lo) : kes(lo) + ' – ' + hi.toLocaleString('en-US'); }
+function totals(lines){ var lo = 0, hi = 0; lines.forEach(function(l){ if (l.lo != null) { lo += l.lo; hi += l.hi; } }); return [lo, hi]; }
+function lerpTable(pts, x){            /* pts = [[x,lo,hi],...] sorted by x */
+  if (x <= pts[0][0]) { var f = x / pts[0][0]; return [pts[0][1] * f, pts[0][2] * f]; }
+  for (var i = 1; i < pts.length; i++) {
+    if (x <= pts[i][0]) { var a = pts[i-1], b = pts[i], t = (x - a[0]) / (b[0] - a[0]); return [a[1] + (b[1]-a[1]) * t, a[2] + (b[2]-a[2]) * t]; }
+  }
+  var last = pts[pts.length - 1], g = x / last[0]; return [last[1] * g, last[2] * g];
+}
+
+/* ---------- GREENHOUSES ---------- */
+var GH_SIZES = [
+  { id:'8x15',  w:8,  l:15, plants:'500–600',    days:'2–3 days', wood:[169000,216000], metal:[240000,255000], drip:[20000,30000] },
+  { id:'8x24',  w:8,  l:24, plants:'800–1,000', days:'3–4 days', wood:[170000,190000], metal:[270000,310000], drip:[35000,45000] },
+  { id:'8x30',  w:8,  l:30, plants:'1,100–1,300', days:'4–6 days', wood:[230000,240000], metal:[365000,380000], drip:[40000,47500], dripEst:true },
+  { id:'16x30', w:16, l:30, plants:'up to 2,000',   days:'5–7 days', wood:[380000,390000], metal:[670000,700000], drip:[45000,50000] }
+];
+GH_SIZES.forEach(function(s){ s.area = s.w * s.l; });
+var GH_CROPS = {
+  tomato:{n:'Tomatoes', tall:true,  note:'Tomatoes grow tall and need the full 4.5 m apex height plus the crop-support system and twine that come with our kits.'},
+  capsicum:{n:'Capsicum', tall:true, note:'Capsicum does very well under a controlled environment and uses the same crop-support system as tomatoes.'},
+  cucumber:{n:'Cucumbers', tall:true, note:'Cucumbers are trellised vines, so height and crop support matter more than floor area.'},
+  melon:{n:'Melons / watermelon', tall:true, note:'Melons are usually trellised in a greenhouse to save floor space and improve airflow.'},
+  strawberry:{n:'Strawberries', tall:false, note:'Strawberries are low crops; plant capacity depends on your bed layout, so the plant count shown is a guide only.'},
+  flowers:{n:'Cut flowers', tall:false, note:'Flower planting densities differ from vegetables, so confirm the plant count with a technician.'},
+  nursery:{n:'Seedlings / nursery', tall:false, note:'For a nursery, seedling trays and coco peat are part of our package, so you can start raising seedlings straight away.'},
+  other:{n:'Other crop', tall:false, note:'Tell us the crop when you call and we will confirm height, spacing and plant numbers.'}
+}; // default is metallic greenhouse not wooden
+function ghMat(v){ return v.mat !== 'auto' ? v.mat : (v.goal === 'commercial' ? 'metal' : 'wood'); }
+function ghCalc(v){
+  var land = (+v.land) * (v.landUnit === 'acre' ? ACRE : 1);
+  if (!(land > 0)) return { empty:true, msg:'Enter the size of your land to see a recommendation.' };
+  var n = Math.max(1, Math.min(12, Math.round(+v.count || 1)));
+  var usablePer = land / 1.2 / n, warn = [], size, crop = GH_CROPS[v.crop];
+  if (v.size === 'auto') {
+    var fit = GH_SIZES.filter(function(s){ return s.area <= usablePer; });
+    if (fit.length) size = fit[fit.length - 1];
+    else { size = GH_SIZES[0]; warn.push('Your land is smaller than our smallest standard house (8 m × 15 m = 120 m², plus working space). Call us and we can discuss a custom size.'); }
+  } else {
+    size = GH_SIZES.filter(function(s){ return s.id === v.size; })[0];
+    if (n * size.area * 1.2 > land) warn.push(n + ' × ' + size.w + ' × ' + size.l + ' m needs about ' + Math.ceil(n * size.area * 1.2).toLocaleString('en-US') + ' m² including working space around the structure. You entered ' + Math.round(land).toLocaleString('en-US') + ' m².');
+  }
+  var mat = ghMat(v);
+  var mtype = v.mtype === 'auto' ? (crop.tall ? 'vent' : 'tunnel') : v.mtype;
+  var base = mat === 'metal' ? size.metal : size.wood;
+  var lines = [];
+  lines.push({ t:'Structure, cover & installation', n:(n > 1 ? n + ' houses · ' : '') + 'published price', lo:base[0]*n, hi:base[1]*n });
+  var dripLine = null;
+  if (mat === 'metal') lines.push({ t:'Drip irrigation kit & filtration unit', tag:'Included' });
+  else if (v.drip) lines.push({ t:'Drip irrigation kit', n:'Wooden houses take the drip kit as an add-on', lo:size.drip[0]*n, hi:size.drip[1]*n, est:!!size.dripEst });
+  var misting = v.mist === 'basic' ? [13000,45000] : v.mist === 'adv' ? [40000,65000] : null;
+  if (misting) lines.push({ t: v.mist === 'basic' ? 'Sprinklers / misters (basic)' : 'Sprinklers (advanced, automated)', lo:misting[0]*n, hi:misting[1]*n });
+  if (v.fert) lines.push({ t:'Fertigation (fertilizer injector)', n:'Published as "from KES 10,000"', lo:10000*n, hi:15000*n, est:true });
+  var tt = totals(lines);
+
+  /* alternative */
+  var alt = null;
+  var extras = (misting ? [misting[0]*n, misting[1]*n] : [0,0]);
+  if (v.fert) { extras[0] += 10000*n; extras[1] += 15000*n; }
+  if (mat === 'wood') alt = { t:'Metallic instead of wooden (drip kit included)', lo:size.metal[0]*n + extras[0], hi:size.metal[1]*n + extras[1] };
+  else alt = { t:'Wooden instead of metallic (with drip kit)', lo:size.wood[0]*n + size.drip[0]*n + extras[0], hi:size.wood[1]*n + size.drip[1]*n + extras[1] };
+
+  var why = [];
+  why.push('A ' + size.w + ' × ' + size.l + ' m house uses ' + size.area + ' m² and fits within your land with room to work around it. It holds ' + size.plants + ' plants (published figure for tomato-type crops).');
+  if (v.mat === 'auto') {
+    if (mat === 'metal') why.push('You are planning commercial, multi-season production, so we recommend a metallic (galvanised steel) frame. It is built for Kenya’s wind, heavy rain and heat, and the package already includes the drip kit.');
+    else why.push(v.goal === 'budget' ? 'You want the lowest upfront cost, so we recommend a wooden frame, which is the most affordable option for farmers with limited resources.' : 'For a first season or trial, a wooden frame gets you growing at the lowest upfront cost. You can move to metallic later.');
+  } else why.push(mat === 'metal' ? 'Metallic frames are galvanised steel, with strong resistance to wind, rain and heat, and a longer service life.' : 'Wooden frames are the most affordable route and are strong enough for a house up to 4.5 m high.');
+  if (mat === 'metal') why.push(mtype === 'vent'
+    ? 'Vent (V-shaped) structure: 3 ventilation ends and a 4.5 m apex. It suits tall crops and warmer areas.'
+    : 'Tunnel (half-moon) structure: dome shape, 4.2–4.5 m apex, 2 ventilation ends with side roll-ups. It suits lower crops and windy sites.');
+  why.push(crop.note);
+  var inc = mat === 'metal'
+    ? ['Metallic greenhouse structure', 'Polythene cover: 200 microns, UV treated, 5-year guarantee', 'Insect nets for top ventilation', 'Side polythene roll-ups', 'Drip irrigation kit and filtration unit', 'Crop support system and entry pouch', 'Seedling trays and coco peat for your crop population', 'Production manual, 16 L knapsack sprayer, 1,000 m nylon twine', 'Technicians on site throughout installation, with their transport and accommodation']
+    : ['Wooden greenhouse structure (up to 4.5 m high)', 'UV-treated cover, up to 6 years of service', 'Anti-insect net ventilation', 'Installation by our technicians'];
+  var exc = ['Delivery of materials to your site', 'Water tank', 'Casual labour (hired by you)'];
+  if (n > 1) why.push('Pricing shown is for ' + n + ' houses. Ask about a combined-order quote when you call.');
+  var buildTime = 'Typical build time per house: ' + size.days + '.';
+  var title = (n > 1 ? n + ' × ' : '') + size.w + ' m × ' + size.l + ' m ' + (mat === 'metal' ? (mtype === 'vent' ? 'Metallic Vent' : 'Metallic Tunnel') : 'Wooden') + ' Greenhouse';
+  return { title:title, sub:crop.n + ' · ' + (n > 1 ? n + ' houses · ' : '') + size.plants + ' plants per house', lines:lines, total:tt, why:why, inc:inc, exc:exc, extra:buildTime, alt:alt, warn:warn,
+    summary:'Greenhouse: ' + title + ' | Crop: ' + crop.n + ' | Land: ' + Math.round(land) + ' m2 | Drip: ' + (mat === 'metal' ? 'included' : (v.drip ? 'yes' : 'no')) };
+}
+
+/* ---------- DRIP IRRIGATION ---------- */
+
+/* [acres, lo, hi] per lines-per-bed. lo = Sep 2026 price page, hi = May 2026 per-acre page. */
+
+var DRIP_TABLE = {
+
+  1:[[0.125,10000,17000],[0.25,16000,35000],[0.5,30000,68000],[1,65000,130000]],
+
+  2:[[0.125,15000,22000],[0.25,25000,40000],[0.5,45000,75000],[1,95000,160000]],
+
+  3:[[0.125,20000,27000],[0.25,35000,45000],[0.5,60000,87000],[1,130000,180000]]
+
+};
+
+var DRIP_CROPS = {
+
+  tomato:{n:'Tomatoes', lines:2, sp:'Tomatoes are usually spaced at 20 cm on the drip tape.'},
+
+  onion:{n:'Onions', lines:3, sp:'Onions take 3 driplines per bed with 15 cm spacing. Aqua Hub’s published average for onions is KES 185,000–200,000 per acre.'},
+
+  capsicum:{n:'Capsicum', lines:2, sp:'Capsicum takes 2 driplines per bed. Aqua Hub’s published average is KES 135,000–160,000 per acre.'},
+
+  cabbage:{n:'Cabbage / kale', lines:2, sp:'Cabbage is usually spaced at 20 cm on the drip tape.'},
+
+  beans:{n:'French beans / peas', lines:2, sp:'Confirm tape spacing with a technician for closely planted legumes.'},
+
+  melon:{n:'Watermelon', lines:1, sp:'Watermelons are widely spaced, so one line per bed is normally enough. Aqua Hub’s published average is KES 135,000 per acre.'},
+
+  coffee:{n:'Coffee / fruit trees (button drippers)', lines:0, sp:'Tree crops use button drippers around each plant instead of tape.'}
+
+};
+function dripCalc(v){
+
+  var area = (+v.land) * (v.landUnit === 'acre' ? 1 : v.landUnit === 'ha' ? 2.47105 : 1 / ACRE);
+  if (!(area > 0)) return { empty:true, msg:'Enter the size of the area you want to irrigate.' };
+  var crop = DRIP_CROPS[v.crop], tree = crop.lines === 0, warn = [];
+  var lines = [], why = [];
+  var kitLo, kitHi, L = v.lines === 'auto' ? crop.lines : +v.lines;
+  if (tree) { kitLo = 150000 * area; kitHi = 250000 * area; }
+  else { var p = lerpTable(DRIP_TABLE[L], area); kitLo = p[0]; kitHi = p[1]; }
+  var est = !tree && (area < 0.125 || area > 1);
+  var pump = v.source === 'pump';
+  if (pump) { kitLo *= 1.15; kitHi *= 1.39; }
+  var ac = area < 1 ? area.toFixed(2) : area.toFixed(1);
+  lines.push({ t:(tree ? 'Button-dripper system' : 'Drip kit · ' + L + ' line' + (L > 1 ? 's' : '') + ' per bed'), n:ac + ' acre' + (area === 1 ? '' : 's') + (pump ? ' · pump-fed' : ' · gravity-fed'), lo:kitLo, hi:kitHi, est:est || pump });
+  if (v.install) lines.push({ t:'Installation by Aqua Hub', n:'Varies with site and system', lo:Math.max(3000, 10000 * area), hi:Math.max(8000, 40000 * area), est:true });
+  if (v.region === 'near') lines.push({ t:'Transport & site visit (Nairobi and nearby)', lo:5000, hi:5000 });
+  else lines.push({ t:'Transport & site visit', tag:'Quoted after site assessment' });
+  var tt = totals(lines);
+  if (area > 1) warn.push('Above 1 acre the published tables stop, so larger areas are scaled from the 1-acre price. Larger farms are usually quoted from a design.');
+  why.push('We matched a ' + (tree ? 'button-dripper system' : L + '-line drip kit') + ' to ' + crop.n.toLowerCase() + ' over about ' + ac + ' acre' + (area === 1 ? '' : 's') + '.');
+  why.push(crop.sp);
+  if (!tree && v.lines !== 'auto') why.push('You chose ' + L + ' line' + (L > 1 ? 's' : '') + ' per bed. More lines per bed raise the cost because more tape and fittings are needed.');
+  if (pump) why.push('Pump-fed systems cost more than gravity-fed ones because of the pumping set and pressure control. Choose gravity if you have a raised tank or elevated water source.');
+  else why.push('Gravity-fed works when your tank or water source sits above the field. Choose pump-fed if it does not.');
+  var inc = ['16 or 20 mm HDPE pipes and 16 mm drip tape (15, 20 or 30 cm spacing)', 'Screen filters, compression fittings and gate valves', 'Fertilizer injector and tank connection', 'Water pressure regulators for pump-operated systems'];
+  var exc = ['Water tank and stand', 'Land preparation', 'Transport outside Nairobi and nearby'];
+  var alt = null;
+  if (!tree && v.lines === 'auto' && L < 3) { var p2 = lerpTable(DRIP_TABLE[L + 1], area); alt = { t:'One more line per bed (' + (L + 1) + ' lines), kit only', lo:p2[0] * (pump ? 1.15 : 1), hi:p2[1] * (pump ? 1.39 : 1) }; }
+  return { title:(tree ? 'Button-Dripper Kit' : ac + '-Acre Drip Kit') + (tree ? '' : ', ' + L + ' Line' + (L > 1 ? 's' : '') + ' per Bed'), sub:crop.n + ' · ' + (pump ? 'pump-fed' : 'gravity-fed'), lines:lines, total:tt, why:why, inc:inc, exc:exc, alt:alt, warn:warn,
+    summary:'Drip irrigation: ' + ac + ' acres | Crop: ' + crop.n + ' | ' + (tree ? 'button drippers' : L + ' lines per bed') + ' | ' + (pump ? 'pump-fed' : 'gravity-fed') };
+}
+
+/* ---------- DAM / POND LINERS ---------- */
+var LINER_RATE = { '0.3':[200,210], '0.5':[225,240], '0.75':[305,330], '1':[350,430] };
+var LINER_ORDER = ['0.3','0.5','0.75','1'];
+function damCalc(v){
+  var L = +v.L, W = +v.W, D = +v.D, s = +v.slope;
+  if (!(L > 0 && W > 0 && D > 0)) return { empty:true, msg:'Enter the length, width and depth of your dam or pond.' };
+  var Lb = L - 2*s*D, Wb = W - 2*s*D;
+  if (Lb <= 0 || Wb <= 0) return { empty:true, msg:'At this side slope the depth is too large for the top length and width. Reduce the depth or choose a steeper slope.' };
+  var slant = D * Math.sqrt(1 + s*s);
+  var area0 = Lb*Wb + slant*(Lb + L + Wb + W);
+  var area = area0 * 1.10;
+  var Ab = Lb*Wb, At = L*W, vol = D / 3 * (Ab + At + Math.sqrt(Ab * At));
+  var idx;
+  if (v.thick === 'auto') {
+    var base = v.use === 'large' ? 3 : v.use === 'pan' ? (vol < 500 ? 1 : vol < 2000 ? 2 : 3) : 1;
+    if (v.soil === 'rocky') base = Math.min(3, base + 1);
+    idx = base;
+  } else idx = LINER_ORDER.indexOf(v.thick);
+  var th = LINER_ORDER[idx], rate = LINER_RATE[th], warn = [];
+  var lines = [{ t:'HDPE liner, ' + th + ' mm', n:Math.round(area).toLocaleString('en-US') + ' m² at KES ' + rate[0] + '–' + rate[1] + ' per m²', lo:area * rate[0], hi:area * rate[1] },
+              { t:'Installation, welding & excavation', tag:'Quoted after site visit' }];
+  var tt = totals(lines);
+  var why = [];
+  why.push('Liner needed: about ' + Math.round(area).toLocaleString('en-US') + ' m², which is the sloped surface area plus 10% for the anchor trench and overlaps.');
+  why.push('Holding capacity: about ' + Math.round(vol).toLocaleString('en-US') + ' m³ (' + (Math.round(vol * 1000)).toLocaleString('en-US') + ' litres).');
+  if (v.thick === 'auto') why.push('We recommend ' + th + ' mm for ' + ({pan:'a water pan or irrigation dam of this size', fish:'a fish pond', tank:'lining a concrete tank', large:'a large farm or community dam'}[v.use]) + (v.soil === 'rocky' ? ', stepped up one grade because rocky ground can puncture thin liners' : '') + '.');
+  else why.push('You selected ' + th + ' mm. Thicker liners cost more per m² but resist punctures and last longer.');
+  if (th === '0.3' && (vol > 200 || v.soil === 'rocky')) warn.push('0.3 mm is the thinnest grade. For a dam of this size or rocky soil, 0.5 mm or thicker is safer.');
+  if (v.use === 'fish') why.push('Our liners are black, UV-treated HDPE, which suits fish ponds.');
+  var alt = null;
+  if (idx < 3) { var r2 = LINER_RATE[LINER_ORDER[idx + 1]]; alt = { t:'Next grade up (' + LINER_ORDER[idx + 1] + ' mm)', lo:area * r2[0], hi:area * r2[1] }; }
+  return { title:Math.round(area).toLocaleString('en-US') + ' m² of ' + th + ' mm HDPE Dam Liner', sub:L + ' × ' + W + ' m top, ' + D + ' m deep · ~' + Math.round(vol).toLocaleString('en-US') + ' m³', lines:lines, total:tt, why:why,
+    inc:['Black, UV-treated HDPE liner', 'Cut to size for your dam or pond'], exc:['Excavation and site preparation', 'Installation and welding (quoted separately, depends on thickness, labour and site)'], alt:alt, warn:warn,
+    summary:'Dam liner: ' + L + 'x' + W + 'x' + D + ' m | ' + th + ' mm | about ' + Math.round(area) + ' m2' };
+}
+
+/* ---------- SOLAR DRYERS ---------- */
+var DRY_SIZES = [
+  { id:'s1', dim:'1.5 × 1.5 × 1.5 m', cap:[40,50],   wood:band(55000),  steel:band(105000), shelves:'2 shelves' },
+  { id:'s2', dim:'2 × 2 × 1.5 m',     cap:[50,100],  wood:band(75000),  steel:band(120000), shelves:'2 shelves' },
+  { id:'s3', dim:'2 × 2 × 2 m',       cap:[90,130],  wood:band(85000),  steel:band(140000), shelves:'3 shelves' },
+  { id:'s4', dim:'3 × 2 × 2 m',       cap:[150,180], wood:band(90000),  steel:band(153000), shelves:'3 shelves' },
+  { id:'s5', dim:'3 × 3 × 2 m',       cap:[250,270], wood:null, steel:[150000,175000], est:true },
+  { id:'s6', dim:'6 × 6 × 2 m (or 5 × 8 × 2 m)', cap:[1000,1100], wood:null, steel:[280000,330000], est:true }
+];
+var DRY_CROPS = {
+  coffee:{n:'Coffee', note:'Coffee dries on raised trays inside the dryer, which protects cherries from rain and dust and gives even drying.'},
+  fruit:{n:'Fruits (mango, banana, pineapple)', note:'Sliced fruits dry on mesh trays. Drying takes about 2–3 days.'},
+  veg:{n:'Vegetables, herbs & spices', note:'Vegetables, chilli, ginger and herbs dry quickly and keep better colour and nutrition than open sun drying.'},
+  grain:{n:'Grains, beans & cassava', note:'Grains and legumes dry evenly on trays and stay clean, which helps you meet moisture requirements for storage.'},
+  fish:{n:'Fish (omena) & meat', note:'Enclosed drying keeps flies and dust off fish and meat, which is more hygienic than open-air drying.'}
+};
+function dryCalc(v){
+  var kg = +v.kg;
+  if (!(kg > 0)) return { empty:true, msg:'Enter roughly how many kilograms you want to dry per batch.' };
+  var crop = DRY_CROPS[v.crop], warn = [], n = 1, size;
+  var fit = DRY_SIZES.filter(function(s){ return s.cap[1] >= kg; });
+  if (fit.length) size = fit[0];
+  else { size = DRY_SIZES[DRY_SIZES.length - 1]; n = Math.ceil(kg / size.cap[1]); }
+  var wantWood = v.mat === 'wood', useWood = wantWood && size.wood;
+  if (wantWood && !size.wood) warn.push('Wooden frames are priced for the four smaller sizes. At this size the price shown is for a steel frame.');
+  var p = useWood ? size.wood : size.steel;
+  var lines = [{ t:(n > 1 ? n + ' dryers of ' : '') + size.dim + (n > 1 ? '' : ' dryer') + ', ' + (useWood ? 'wooden' : 'steel') + ' frame', n:'Fabricated and installed', lo:p[0]*n, hi:p[1]*n }];
+  if (v.hybrid) lines.push({ t:'Hybrid upgrade (backup heat / solar fan)', tag:'Quoted separately' });
+  var tt = totals(lines);
+  var why = ['A dryer of ' + size.dim + ' holds about ' + (size.est ? '~' : '') + size.cap[0] + '–' + size.cap[1] + ' kg per batch' + (size.shelves ? ' (' + size.shelves + ')' : '') + (size.est ? '. Capacity is estimated from floor area, so confirm it with a technician' : '') + ', which covers your ' + kg + ' kg.', crop.note];
+  if (n > 1) why.unshift('Your batch is larger than our biggest single dryer, so the estimate uses ' + n + ' dryers.');
+  why.push(useWood ? 'Wood costs less at every size. Steel lasts longer and suits heavy daily use because it resists rot and termites.' : 'Steel resists rot and termites and suits heavy, daily use.');
+  var alt = null;
+  if (useWood) alt = { t:'Steel frame instead of wooden', lo:size.steel[0]*n, hi:size.steel[1]*n };
+  else if (size.wood) alt = { t:'Wooden frame instead of steel', lo:size.wood[0]*n, hi:size.wood[1]*n };
+  return { title:(n > 1 ? n + ' Solar Dryers, ' : 'Solar Dryer, ') + size.dim, sub:crop.n + ' · about ' + kg + ' kg per batch', lines:lines, total:tt, why:why,
+    inc:['Frame (' + (useWood ? 'wood' : 'steel') + ')', 'UV-resistant transparent cover and black absorber', 'Mesh drying trays', 'Bottom and top vents, and a door', 'Build and installation by Aqua Hub', 'Airflow test and tray-loading instruction'],
+    exc:['Solar fan (optional add-on, priced on request)', 'Transport to your site'], alt:alt, warn:warn,
+    summary:'Solar dryer: ' + (n > 1 ? n + ' x ' : '') + size.dim + ' | ' + (useWood ? 'wooden' : 'steel') + ' | Crop: ' + crop.n + ' | ' + kg + ' kg per batch' + (v.hybrid ? ' | hybrid requested' : '') };
+}
+
+/* ---------- SHADE NETS & SHADE HOUSES ---------- */
+/* published price of one 4 m x 50 m roll (200 m2) by shading percentage */
+var NET_ROLL = { 35:13000, 55:19000, 60:21000, 75:26000, 90:36000 };
+var NET_USE = {
+  nursery:{n:'Vegetable seedling nursery', d:55, why:'Seedlings need filtered light, so 55% balances protection and growth.'},
+  tree:{n:'Tree or coffee nursery', d:60, why:'Young trees and coffee seedlings do well under moderate shade of about 60%.'},
+  veg:{n:'Shading mature vegetables', d:35, why:'A light 35% net cuts heat stress without slowing growth.'},
+  animals:{n:'Livestock or poultry shade', d:75, why:'Animals need strong heat relief, so 75% is the common choice.'},
+  parking:{n:'Parking, patio or play area', d:75, why:'Dense shade of about 75% gives real cooling for people and vehicles.'}
+};
+var HOUSE_PTS = [[200,210000,210000],[800,690000,690000],[1600,1250000,1250000],[1984,1500000,1500000]];
+function shadeCalc(v){
+  var m2 = (+v.area) * (v.unit === 'acre' ? ACRE : 1);
+  if (!(m2 > 0)) return { empty:true, msg:'Enter the area you want to shade.' };
+  var use = NET_USE[v.use], d = v.dens === 'auto' ? use.d : +v.dens, warn = [], lines = [], why = [];
+  var roll = NET_ROLL[d], perM2 = roll / 200;
+  if (v.mode === 'net') {
+    var need = m2 * 1.10, rolls = Math.ceil(need / 200);
+    lines.push({ t:'Shade net ' + d + '% (4 m × 50 m rolls)', n:Math.round(need).toLocaleString('en-US') + ' m² incl. 10% overlap · ' + rolls + ' roll' + (rolls > 1 ? 's' : '') + ' if bought whole', lo:need * perM2, hi:Math.max(rolls * roll * 1.0, need * perM2 * 1.06), est:d === 60 });
+    why.push('Cut-to-size is the lower figure and whole rolls the upper. Each roll is 4 m × 50 m (200 m²).');
+    why.push(v.dens === 'auto' ? use.why : 'You chose ' + d + '% shading. Higher percentages block more light and cost more per roll.');
+    var alt = null;
+    var tt = totals(lines);
+    return { title:Math.round(need).toLocaleString('en-US') + ' m² of ' + d + '% Shade Net', sub:use.n, lines:lines, total:tt, why:why,
+      inc:['UV-treated synthetic fibre net'], exc:['Poles, wire and installation (ask about a shade house)', 'Transport'], alt:alt, warn:warn,
+      summary:'Shade net: ' + Math.round(need) + ' m2 | ' + d + '% | ' + use.n };
+  }
+  var hp = lerpTable(HOUSE_PTS, m2);
+  var adj = Math.max(0, (roll - NET_ROLL[55]) / 200) * m2;
+  lines.push({ t:'Shade house construction', n:Math.round(m2).toLocaleString('en-US') + ' m² · interpolated from published planning figures', lo:hp[0] * 0.92, hi:hp[1] * 1.08, est:true });
+  if (adj > 0) lines.push({ t:'Net upgrade to ' + d + '%', n:'Difference vs a 55% net', lo:adj, hi:adj * 1.1, est:true });
+  if (m2 < 200) warn.push('Shade houses below about 200 m² are quoted individually. Treat this as a rough guide and call us for a site assessment.');
+  if (m2 > 1984) warn.push('Above about 2,000 m² the published figures stop. This is scaled up and should be confirmed from a design.');
+  why.push('Published planning figures: 4 × 50 m about KES 210,000, 16 × 50 m about KES 690,000, 32 × 50 m about KES 1,250,000. Final figures are set after a site assessment.');
+  why.push(use.why);
+  var tt2 = totals(lines);
+  return { title:Math.round(m2).toLocaleString('en-US') + ' m² Shade House', sub:use.n + ' · ' + d + '% net', lines:lines, total:tt2, why:why,
+    inc:['Galvanised steel columns and arches', 'Shade roof and insect-net sides', 'Entry lobby and doors', 'Gutters and drainage', 'Site survey, design, installation and final inspection'],
+    exc:['Drip irrigation and fertigation kits (add-ons)', 'Transport'], alt:null, warn:warn,
+    summary:'Shade house: ' + Math.round(m2) + ' m2 | ' + d + '% net | ' + use.n };
+}
+/*CALC-END*/
+
+/* ==================================================================
+   FORM DEFINITIONS
+   ================================================================== */
+var LAND_UNITS_M = [{v:'m2',t:'m²'},{v:'acre',t:'acres'}];
+var PRODUCTS = [
+  { id:'gh', label:'Greenhouse', calc:ghCalc, fields:[
+    { id:'crop', type:'select', label:'What will you grow?', def:'tomato', options:Object.keys(GH_CROPS).map(function(k){ return {v:k, t:GH_CROPS[k].n}; }) },
+    { id:'goal', type:'choice', label:'What best describes your plan?', def:'trial', options:[
+        {v:'trial', t:'First season or trial', d:'Testing the market, lower upfront cost'},
+        {v:'commercial', t:'Commercial, multi-season', d:'Long-term production'},
+        {v:'budget', t:'Tight budget', d:'Lowest price that works'} ] },
+    { id:'land', type:'number', label:'How much land can you set aside?', def:400, min:1, step:1, unitId:'landUnit', units:LAND_UNITS_M, help:'A standard house needs room around it for access. We allow about 20% extra space.' },
+    { id:'size', type:'select', label:'Greenhouse size', def:'auto', options:[{v:'auto',t:'Recommend the best fit for my land'}].concat(GH_SIZES.map(function(s){ return {v:s.id, t:s.w + ' m × ' + s.l + ' m  (' + s.plants + ' plants)'}; })) },
+    { id:'count', type:'number', label:'Number of greenhouses', def:1, min:1, max:12, step:1 },
+    { id:'mat', type:'choice', label:'Frame material', def:'auto', options:[
+        {v:'auto', t:'Help me decide', d:'Based on your plan'},
+        {v:'wood', t:'Wooden', d:'Most affordable'},
+        {v:'metal', t:'Metallic (steel)', d:'Strongest, longest-lasting'} ] },
+    { id:'mtype', type:'choice', label:'Metallic structure type', def:'auto', show:function(v){ return ghMat(v) === 'metal'; }, options:[
+        {v:'auto', t:'Recommend for my crop'},
+        {v:'vent', t:'Vent (V-shaped)', d:'3 ventilation ends, tall crops'},
+        {v:'tunnel', t:'Tunnel (half-moon)', d:'Dome shape, side roll-ups'} ] },
+    { id:'drip', type:'check', label:'Include drip irrigation lines', d:'Drip kit for the greenhouse beds', def:true, show:function(v){ return ghMat(v) === 'wood'; } },
+    { type:'note', text:'The drip kit and filtration unit are already part of our metallic greenhouse package, so nothing extra is added for drip lines.', show:function(v){ return ghMat(v) === 'metal'; } },
+    { id:'mist', type:'select', label:'Overhead sprinklers or misters', def:'none', options:[{v:'none',t:'Not needed'},{v:'basic',t:'Basic sprinklers / misters'},{v:'adv',t:'Advanced, automated sprinklers'}] },
+    { id:'fert', type:'check', label:'Add fertigation', d:'Fertilizer injector for feeding through the drip lines', def:false }
+  ]},
+  { id:'drip', label:'Drip Irrigation', calc:dripCalc, fields:[
+    { id:'crop', type:'select', label:'Crop', def:'tomato', options:Object.keys(DRIP_CROPS).map(function(k){ return {v:k, t:DRIP_CROPS[k].n}; }) },
+    { id:'land', type:'number', label:'Area to irrigate', def:0.5, min:0.01, step:0.05, unitId:'landUnit', unitDef:'acre', units:[{v:'acre',t:'acres'},{v:'ha',t:'hectares'},{v:'m2',t:'m²'}] },
+    { id:'lines', type:'select', label:'Driplines per bed', def:'auto', show:function(v){ return v.crop !== 'coffee'; }, options:[{v:'auto',t:'Recommend for my crop'},{v:'1',t:'1 line per bed'},{v:'2',t:'2 lines per bed'},{v:'3',t:'3 lines per bed'}], help:'More lines per bed means more tape and fittings, so a higher price.' },
+    { id:'source', type:'choice', label:'How will water reach the field?', def:'gravity', options:[
+        {v:'gravity', t:'Gravity-fed', d:'Tank or source is above the field'},
+        {v:'pump', t:'Pump-fed', d:'Electric, solar or diesel pump'} ] },
+    { id:'install', type:'check', label:'Installation by Aqua Hub technicians', d:'Survey, trenching, laying and pressure testing', def:true },
+    { id:'region', type:'choice', label:'Where is the farm?', def:'near', options:[
+        {v:'near', t:'Nairobi and nearby', d:'Flat transport and site-visit charge'},
+        {v:'far', t:'Elsewhere in Kenya', d:'Quoted after site assessment'} ] }
+  ]},
+  { id:'dam', label:'Dam Liners', calc:damCalc, fields:[
+    { id:'use', type:'select', label:'What is the liner for?', def:'pan', options:[{v:'pan',t:'Water pan or irrigation dam'},{v:'fish',t:'Fish pond'},{v:'tank',t:'Lining a concrete tank'},{v:'large',t:'Large farm or community dam'}] },
+    { id:'dims', type:'dims', label:'Dimensions at the top of the dam (metres)', defs:{L:20,W:15,D:2.5} },
+    { id:'slope', type:'select', label:'Side slope', def:'1.5', options:[{v:'0',t:'Vertical walls (tanks)'},{v:'1.5',t:'Standard slope (1 : 1.5)'},{v:'2',t:'Gentle slope (1 : 2)'}] },
+    { id:'soil', type:'select', label:'Soil at the site', def:'sandy', options:[{v:'sandy',t:'Sandy or loam'},{v:'clay',t:'Clay'},{v:'rocky',t:'Rocky or gravelly'}] },
+    { id:'thick', type:'select', label:'Liner thickness', def:'auto', options:[{v:'auto',t:'Recommend for me'},{v:'0.3',t:'0.3 mm'},{v:'0.5',t:'0.5 mm'},{v:'0.75',t:'0.75 mm'},{v:'1',t:'1 mm'}] }
+  ]},
+  { id:'dry', label:'Solar Dryers', calc:dryCalc, fields:[
+    { id:'crop', type:'select', label:'What will you dry?', def:'coffee', options:Object.keys(DRY_CROPS).map(function(k){ return {v:k, t:DRY_CROPS[k].n}; }) },
+    { id:'kg', type:'number', label:'Produce per batch (kg)', def:100, min:1, step:10, suffix:'kg', help:'Drying usually takes 2–3 days per batch.' },
+    { id:'mat', type:'choice', label:'Frame material', def:'wood', options:[{v:'wood',t:'Wooden',d:'Costs less at every size'},{v:'steel',t:'Steel',d:'Heavy daily use, longer life'}] },
+    { id:'hybrid', type:'check', label:'Hybrid dryer', d:'Adds backup heat so drying carries on in cloudy weather', def:false }
+  ]},
+  { id:'shade', label:'Shade Nets', calc:shadeCalc, fields:[
+    { id:'mode', type:'choice', label:'What do you need?', def:'net', options:[{v:'net',t:'Shade net only',d:'Rolls or cut to size'},{v:'house',t:'A built shade house',d:'Structure, net and installation'}] },
+    { id:'use', type:'select', label:'What is it for?', def:'nursery', options:Object.keys(NET_USE).map(function(k){ return {v:k, t:NET_USE[k].n}; }) },
+    { id:'area', type:'number', label:'Area to cover', def:200, min:1, step:10, unitId:'unit', units:LAND_UNITS_M },
+    { id:'dens', type:'select', label:'Shading percentage', def:'auto', options:[{v:'auto',t:'Recommend for my use'},{v:'35',t:'35%'},{v:'55',t:'55%'},{v:'60',t:'60%'},{v:'75',t:'75%'},{v:'90',t:'90%'}] }
+  ]}
+];
+
+/* ==================================================================
+   RENDERING
+   ================================================================== */
+var $ = function(s){ return document.querySelector(s); };
+var form = $('#form'), resultEl = $('#result'), tabsEl = document.querySelector('.tabs');
+var current = PRODUCTS[0], lastResult = null;
+
+function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+var uid = 0;
+function buildForm(p){
+  form.innerHTML = '';
+  p.fields.forEach(function(f){
+    var w = document.createElement('div'); w.className = 'field'; w.setAttribute('data-f', f.id || ('n' + (uid++)));
+    var id = 'f_' + p.id + '_' + (f.id || uid), h = '';
+    if (f.type === 'select') {
+      h = '<label for="' + id + '">' + esc(f.label) + '</label><select id="' + id + '" name="' + f.id + '">' + f.options.map(function(o){ return '<option value="' + esc(o.v) + '"' + (o.v === f.def ? ' selected' : '') + '>' + esc(o.t) + '</option>'; }).join('') + '</select>';
+    } else if (f.type === 'number') {
+      var inp = '<input type="number" id="' + id + '" name="' + f.id + '" value="' + f.def + '" min="' + (f.min || 0) + '"' + (f.max ? ' max="' + f.max + '"' : '') + ' step="' + (f.step || 1) + '" inputmode="decimal">';
+      if (f.units) h = '<label for="' + id + '">' + esc(f.label) + '</label><div class="row">' + inp + '<select name="' + f.unitId + '" aria-label="Unit">' + f.units.map(function(u){ return '<option value="' + u.v + '"' + (u.v === (f.unitDef || f.units[0].v) ? ' selected' : '') + '>' + u.t + '</option>'; }).join('') + '</select></div>';
+      else h = '<label for="' + id + '">' + esc(f.label) + (f.suffix ? ' (' + f.suffix + ')' : '') + '</label>' + inp;
+    } else if (f.type === 'dims') {
+      h = '<span class="lab">' + esc(f.label) + '</span><div class="row3">' + [['L','Length'],['W','Width'],['D','Depth']].map(function(d){ return '<div><div class="sub">' + d[1] + '</div><input type="number" name="' + d[0] + '" value="' + f.defs[d[0]] + '" min="0.1" step="0.1" inputmode="decimal" aria-label="' + d[1] + ' in metres"></div>'; }).join('') + '</div>';
+    } else if (f.type === 'choice') {
+      h = '<span class="lab">' + esc(f.label) + '</span><div class="choices">' + f.options.map(function(o){ return '<label class="choice"><input type="radio" name="' + f.id + '" value="' + esc(o.v) + '"' + (o.v === f.def ? ' checked' : '') + '><b>' + esc(o.t) + '</b>' + (o.d ? '<span>' + esc(o.d) + '</span>' : '') + '</label>'; }).join('') + '</div>';
+    } else if (f.type === 'check') {
+      h = '<label class="check"><input type="checkbox" name="' + f.id + '"' + (f.def ? ' checked' : '') + '><div><b>' + esc(f.label) + '</b><span>' + esc(f.d || '') + '</span></div></label>';
+    } else if (f.type === 'note') {
+      h = '<div class="note">' + esc(f.text) + '</div>';
+    }
+    if (f.help) h += '<div class="help">' + esc(f.help) + '</div>';
+    w.innerHTML = h; form.appendChild(w);
+  });
+}
+function getVals(p){
+  var v = {};
+  p.fields.forEach(function(f){
+    if (f.type === 'note') return;
+    if (f.type === 'dims') { ['L','W','D'].forEach(function(k){ v[k] = form.elements[k].value; }); return; }
+    var el = form.elements[f.id];
+    if (f.type === 'choice') { var c = form.querySelector('input[name="' + f.id + '"]:checked'); v[f.id] = c ? c.value : f.def; }
+    else if (f.type === 'check') v[f.id] = el.checked;
+    else v[f.id] = el.value;
+    if (f.unitId) v[f.unitId] = form.elements[f.unitId].value;
+  });
+  return v;
+}
+function update(){
+  var v = getVals(current);
+  var i = 0;
+  current.fields.forEach(function(f){
+    var w = form.children[i++]; if (f.show) w.hidden = !f.show(v);
+  });
+  if (current.id === 'gh') {
+    /* "number of greenhouses" always visible; nothing else needed */
+  }
+  var r = current.calc(v); lastResult = r; renderResult(r);
+}
+function renderResult(r){
+  if (r.empty) { resultEl.innerHTML = '<div class="empty">' + esc(r.msg) + '</div>'; return; }
+  var rows = r.lines.map(function(l){
+    var right = l.lo != null ? range(l.lo, l.hi).replace('KES ', '') + (l.est ? ' <span class="dag">†</span>' : '') : '<span class="tag">' + esc(l.tag) + '</span>';
+    return '<tr><td class="t">' + esc(l.t) + (l.n ? '<span class="n">' + esc(l.n) + '</span>' : '') + '</td><td>' + right + '</td></tr>';
+  }).join('');
+  var anyEst = r.lines.some(function(l){ return l.est; });
+  var li = function(a){ return a.map(function(x){ return '<li>' + esc(x) + '</li>'; }).join(''); };
+  resultEl.innerHTML = '<div class="in">' +
+    '<div class="eyebrow">Recommended for you</div><h2>' + esc(r.title) + '</h2><p class="sub">' + esc(r.sub) + '</p>' +
+    (r.warn || []).map(function(w){ return '<div class="warn">' + esc(w) + '</div>'; }).join('') +
+    '<div class="price"><small>Estimated price range</small><strong>' + range(r.total[0], r.total[1]) + '</strong><em>Estimate before delivery and any items quoted separately</em></div>' +
+    '<table class="lines" aria-label="Price breakdown"><tbody>' + rows + '</tbody></table>' +
+    (anyEst ? '<p class="sub"><span class="dag">†</span> Scaled or derived from published figures. Confirm when you call.</p>' : '') +
+    '<div class="block"><h4>Why this recommendation</h4><ul>' + li(r.why) + '</ul></div>' +
+    '<div class="block"><h4>What is included</h4><ul>' + li(r.inc) + '</ul></div>' +
+    '<div class="block"><h4>Not included</h4><ul>' + li(r.exc) + '</ul></div>' +
+    (r.extra ? '<p class="sub" style="margin-top:12px">' + esc(r.extra) + '</p>' : '') +
+    (r.alt ? '<div class="alt"><b>' + esc(r.alt.t) + ':</b> ' + range(r.alt.lo, r.alt.hi) + '</div>' : '') +
+    '<div class="actions"><a class="btn" id="wa" target="_blank" rel="noopener">Request this quote on WhatsApp</a><a class="btn ghost" href="tel:+254790719020">Call 0790 719 020</a><button class="btn ghost" id="copy" type="button">Copy summary</button></div>' +
+    '<p class="fine">This is an estimate built from Aqua Hub Kenya’s published prices (checked October 2026). Final prices depend on your site, materials and current stock, and are confirmed in a written quote after a site assessment.</p></div>';
+  var text = 'Hello Aqua Hub Kenya, I used your quote calculator.\n' + r.summary + '\nEstimated range: ' + range(r.total[0], r.total[1]) + '\nPlease send me a quote.';
+  $('#wa').href = 'https://wa.me/254790719020?text=' + encodeURIComponent(text);
+  $('#copy').onclick = function(){
+    var done = function(){ $('#copy').textContent = 'Copied'; setTimeout(function(){ var c = $('#copy'); if (c) c.textContent = 'Copy summary'; }, 1600); };
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, fallback); else fallback();
+    function fallback(){ var t = document.createElement('textarea'); t.value = text; document.body.appendChild(t); t.select(); try { document.execCommand('copy'); done(); } catch (e) {} document.body.removeChild(t); }
+  };
+}
+function selectProduct(p){
+  current = p;
+  Array.prototype.forEach.call(tabsEl.children, function(b){ b.setAttribute('aria-selected', String(b.dataset.id === p.id)); });
+  $('#formTitle').textContent = 'Tell us about your ' + p.label.toLowerCase() + ' project';
+  buildForm(p); update();
+}
+PRODUCTS.forEach(function(p){
+  var b = document.createElement('button'); b.type = 'button'; b.className = 'tab'; b.setAttribute('role', 'tab'); b.dataset.id = p.id; b.textContent = p.label;
+  b.addEventListener('click', function(){ selectProduct(p); }); tabsEl.appendChild(b);
+});
+form.addEventListener('input', update); form.addEventListener('change', update);
+selectProduct(PRODUCTS[0]);
+</script>
+</body>
+</html>
